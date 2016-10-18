@@ -85,16 +85,19 @@ $aclFlag = $row['acl'];
                  </a>
              </div>
 
-           <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+             <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                <ul class="nav navbar-nav">
-                   <li>
-                       <a class="page-scroll" href="index.php">Back</a>
-                   </li>
-                 </ul>
-               </div>
-
+                 <li>
+                   <a href="logout.php">Logout</a>
+                 </li>
+                 <li>
+                   <a class="page-scroll" href="index.php">Back</a>
+                 </li>
+               </ul>
              </div>
-           </nav>
+
+           </div>
+         </nav>
 
      <!-- Intro Header -->
      <header class="intro">
