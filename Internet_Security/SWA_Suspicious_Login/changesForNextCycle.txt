@@ -1,0 +1,10 @@
+Logout
+	Make button to logout
+		destry session, redirect to login page.
+
+Login Attempt Table
+	when a user has a failed login attempt, log the time, email used, and ip address of the user.
+	5 failed attempts locks the account (lock flag must be made and must alter login script to check this)
+	email is sent to user with a pin, this pin is hashed into the database and the user must enter this to unlock their account upon login.
+
+
