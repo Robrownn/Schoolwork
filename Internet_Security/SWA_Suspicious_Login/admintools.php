@@ -91,6 +91,9 @@ if ($aclFlag != 1) {
 
            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
                <ul class="nav navbar-nav">
+                 <li>
+                   <a href="logout.php">Logout</a>
+                 </li>
                    <li>
                        <a class="page-scroll" href="home.php">Back</a>
                    </li>
