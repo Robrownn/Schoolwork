@@ -70,7 +70,7 @@ function emailPIN() {
               </head>
               <body>
               <p>Here is your PIN: <b>" . $pin . "</b></p>
-              <a href=\"https://notturing.ddns.net/rob/IS_ASS2/lockout.php\">Unlock your account here!</a>
+              <a href=\"https://notturing.ddns.net/rob/IS_ASS2/lockedout.php\">Unlock your account here!</a>
               </body>
               </html>
               ";
