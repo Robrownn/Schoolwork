@@ -18,7 +18,7 @@ try {
   $secA = password_hash($secACase, PASSWORD_DEFAULT);
   $datetime = date("Y-m-d H:i:s");
 
-  $stmt = $conn->prepare("INSERT INTO rob.members (username,email,password,secQuestion,secAnswer,acl,last_login) VALUES ('$username', '$email', '$password', '$secQ', '$secA',0,'$datetime')");
+  $stmt = $conn->prepare("INSERT INTO rob.members (username,email,password,secQuestion,secAnswer,acl,last_login,ip) VALUES ('$username', '$email', '$password', '$secQ', '$secA',0,'$datetime','$ip')");
   $stmt->execute();
 
   $stmt = $conn->prepare("INSERT INTO rob.login_attempts (logintime,email,ip) VALUES ('$datetime','$email','$ip')");

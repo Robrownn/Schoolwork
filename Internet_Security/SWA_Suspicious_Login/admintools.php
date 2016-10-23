@@ -163,37 +163,43 @@ if ($aclFlag != 1) {
        <div class="row">
          <div class="col-lg-8 col-lg-offset-2">
            <h2>Suspicious Login Attempts</h2>
-
+            <!-- Selects all suspicious results and makes a list of them -->
              <?php
               $stmt = $conn->("SELECT * FROM rob.members");
               $stmt->execute();
               $rowCount = $stmt->rowCount();
+              // get the number of rows
               for ($i = 1; $i < $rowCount; $i++) {
+                // members stores all successful login attempts where as login attempts stores all failed and successful
                 $lastSuccessIP = $conn->prepare("SELECT ip FROM rob.members WHERE userid = $i");
                 $lastSuccessIP->execute();
                 $lastFailIP = $conn->prepare("SELECT ip FROM rob.login_attempts WHERE userid = $i");
                 $lastFailIP->execute();
                 $isLocked = $conn->prepare("SELECT locked FROM rob.members WHERE userid = $i");
                 $islocked->execute();
+                // if the account is already locked then we don't care to show it.
 
-                if ($lastSuccessIP != $lastFailIP && !$isLocked) {
+                // if the last successful ip is different than the last failed ip then we may have a suspicious login attempt.
+                if ($lastSuccessIP != $lastFailIP && $isLocked != 1) {
                   $stmt = $conn->prepare("SELECT * FROM rob.members WHERE userid = $i");
                   $stmt->execute();
 
                   $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                  // each entry is a row because it's easier to submit a lockout request that way.
                   printf("
                   <form action=\"lockout.php\" method=\"post\">
                     <div class=\"form-group\">
-                      <label name = \"email\">" . row['email'] . "</label>
+                      <input type=\"radio\" name = \"email\" value = ". row['email'] .">" . row['email'] . "</input>
                       <label>Failed Attempts: " . row['failed_attempts'] . "</label>
-                      <button type=\"submit\" class=\"btn btn-default\" value = \"Lock\"></button>
+                      <input type=\"submit\" class=\"btn btn-default\" value = \"Lock\"></input>
                     </div>
                   </form>
                   ");
                 }
               }
               ?>
-            </form>
+            </div>
+          </div>
      </section>
 
      <!-- Download Section -->

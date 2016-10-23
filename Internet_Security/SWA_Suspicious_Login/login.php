@@ -28,7 +28,7 @@ try {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
   // If they login successfully set their last successful login date to this time and log their ip
-  if ($rowCount == 1 && password_verify($password, $row['password']) && $login_attempts < 5) {
+  if ($rowCount == 1 && password_verify($password, $row['password']) && row['locked'] != 1) {
     $_SESSION['email'] = $email;
 
     $update = $conn->prepare("UPDATE rob.members SET last_login='$datetime',ip='$ip' WHERE (email = '$email')");
@@ -38,6 +38,14 @@ try {
     $update->execute();
 
     header('Location: home.php');
+  }else if ($rowCount == 1 && password_verify($password, $row['password']) && row['locked'] == 1) {
+    $hashedPIN = password_hash($pin,PASSWORD_DEFAULT);
+
+    $update = $conn->prepare("UPDATE rob.members SET PIN = $hashedPIN WHERE email = '$email'");
+    $update->execute();
+    emailPIN();
+
+    header('Location: lockedout.php');
   }
   else {
 // Otherwise increment the amount of failed attempts by one and log their ip address and the date at which this happened.
