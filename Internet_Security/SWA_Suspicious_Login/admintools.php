@@ -160,6 +160,40 @@ if ($aclFlag != 1) {
            </form>
          </div>
        </div>
+       <div class="row">
+         <div class="col-lg-8 col-lg-offset-2">
+           <h2>Suspicious Login Attempts</h2>
+
+             <?php
+              $stmt = $conn->("SELECT * FROM rob.members");
+              $stmt->execute();
+              $rowCount = $stmt->rowCount();
+              for ($i = 1; $i < $rowCount; $i++) {
+                $lastSuccessIP = $conn->prepare("SELECT ip FROM rob.members WHERE userid = $i");
+                $lastSuccessIP->execute();
+                $lastFailIP = $conn->prepare("SELECT ip FROM rob.login_attempts WHERE userid = $i");
+                $lastFailIP->execute();
+                $isLocked = $conn->prepare("SELECT locked FROM rob.members WHERE userid = $i");
+                $islocked->execute();
+
+                if ($lastSuccessIP != $lastFailIP && !$isLocked) {
+                  $stmt = $conn->prepare("SELECT * FROM rob.members WHERE userid = $i");
+                  $stmt->execute();
+
+                  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                  printf("
+                  <form action=\"lockout.php\" method=\"post\">
+                    <div class=\"form-group\">
+                      <label name = \"email\">" . row['email'] . "</label>
+                      <label>Failed Attempts: " . row['failed_attempts'] . "</label>
+                      <button type=\"submit\" class=\"btn btn-default\" value = \"Lock\"></button>
+                    </div>
+                  </form>
+                  ");
+                }
+              }
+              ?>
+            </form>
      </section>
 
      <!-- Download Section -->
