@@ -165,38 +165,42 @@ if ($aclFlag != 1) {
            <h2>Suspicious Login Attempts</h2>
             <!-- Selects all suspicious results and makes a list of them -->
              <?php
-              $stmt = $conn->("SELECT * FROM rob.members");
-              $stmt->execute();
-              $rowCount = $stmt->rowCount();
-              // get the number of rows
-              for ($i = 1; $i < $rowCount; $i++) {
-                // members stores all successful login attempts where as login attempts stores all failed and successful
-                $lastSuccessIP = $conn->prepare("SELECT ip FROM rob.members WHERE userid = $i");
-                $lastSuccessIP->execute();
-                $lastFailIP = $conn->prepare("SELECT ip FROM rob.login_attempts WHERE userid = $i");
-                $lastFailIP->execute();
-                $isLocked = $conn->prepare("SELECT locked FROM rob.members WHERE userid = $i");
-                $islocked->execute();
-                // if the account is already locked then we don't care to show it.
+             $stmt = $conn->prepare("SELECT * FROM rob.members");
+             $stmt->execute();
+             $rowCount = $stmt->rowCount();
+             if ($rowCount != 0) {
+               for ($i = 1; $i <= $rowCount; $i++) {
+                 $lastSuccessIP = $conn->prepare("SELECT ip FROM rob.members WHERE userid = $i");
+                 $lastSuccessIP->execute();
+                 $lastFailIP = $conn->prepare("SELECT ip FROM rob.login_attempts WHERE userid = $i");
+                 $lastFailIP->execute();
+                 $locked = $conn->prepare("SELECT locked FROM rob.members WHERE userid = $i");
+                 $locked->execute();
 
-                // if the last successful ip is different than the last failed ip then we may have a suspicious login attempt.
-                if ($lastSuccessIP != $lastFailIP && $isLocked != 1) {
-                  $stmt = $conn->prepare("SELECT * FROM rob.members WHERE userid = $i");
-                  $stmt->execute();
+                 // if the account is already locked then we don't care to show it.
+                 $successIP = $lastSuccessIP->fetch(PDO::FETCH_ASSOC);
+                 $failIP = $lastFailIP->fetch(PDO::FETCH_ASSOC);
+                 $isLocked = $locked->fetch(PDO::FETCH_ASSOC);
 
-                  $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                  // each entry is a row because it's easier to submit a lockout request that way.
-                  printf("
-                  <form action=\"lockout.php\" method=\"post\">
-                    <div class=\"form-group\">
-                      <input type=\"radio\" name = \"email\" value = ". row['email'] .">" . row['email'] . "</input>
-                      <label>Failed Attempts: " . row['failed_attempts'] . "</label>
-                      <input type=\"submit\" class=\"btn btn-default\" value = \"Lock\"></input>
-                    </div>
-                  </form>
-                  ");
-                }
-              }
+
+                 if ($successIP['ip'] != $failIP['ip']  && $isLocked['locked'] != 1) {
+                   $stmt = $conn->prepare("SELECT * FROM rob.members WHERE userid = $i");
+                   $stmt->execute();
+                   $stmt2 = $conn->prepare("SELECT * FROM rob.login_attempts WHERE userid = $i");
+                   $stmt2->execute();
+
+                   $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                   $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                   printf("<form action=\"lockout.php\" method=\"post\">\n
+                              <div class=\"form-group\">\n
+                                <input type=\"radio\" name = \"email\" value = \"". $row['email'] ."\">" . $row['email'] . "</input>\n
+                                <label>Failed Attempts: " . $row2['failed_attempts'] . "</label>\n
+                                <input type=\"submit\" class=\"btn btn-default\" value = \"Lock\"></input>\n
+                              </div>\n
+                            </form>\n");
+                 }
+               }
+            }
               ?>
             </div>
           </div>

@@ -19,6 +19,10 @@ try {
 
   $update = $conn->prepare("UPDATE rob.members SET PIN = $hashedPIN WHERE email = '$email'");
   $update->execute();
+
+  emailPIN();
+
+  header('Location: success.php');
 }catch(PDOException $e) {
   header('Location: error.php');
 }
