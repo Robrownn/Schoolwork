@@ -2,7 +2,12 @@ body {
   background-color: #5D4037;
 }
 
-h1, h2, h3, p, a {
+h1, h2, h3 {
+  font-family: 'Roboto', 'Noto', sans-serif;
+  font-weight: 300;
+}
+
+p, a, th, td {
   font-family: 'Roboto', 'Noto', sans-serif;
 }
 
@@ -12,6 +17,12 @@ footer {
   width: 70%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.8)
 }
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
 
 #Stream {
   width: 70%;
@@ -40,6 +51,7 @@ footer {
 
 .circle-pic img {
   border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
 /* Navbar Styling*/
