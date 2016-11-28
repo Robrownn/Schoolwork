@@ -11,6 +11,10 @@ p, a, th, td {
   font-family: 'Roboto', 'Noto', sans-serif;
 }
 
+p {
+  text-align: center; 
+}
+
 footer {
   background-color: #795548;
   margin: auto;
@@ -45,13 +49,34 @@ table, th, td {
   width: 70%;
 }
 
-.info-panel h2, p, img {
+.info-panel h2 {
+  text-align: center;
+}
+
+.info-panel p {
+  text-align: center;
+}
+
+.info-panel img {
   text-align: center;
 }
 
 .circle-pic img {
   border-radius: 50%;
   box-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.info-panel2 {
+  background-color: #D7CCC8;
+  box-shadow: 0 4px 4px rgba(0,0,0,0.8);
+  padding: 20px;
+  margin: auto;
+  margin-bottom: 20px;
+  width: 70%;
+}
+
+.info-panel2 p {
+  text-align: left;
 }
 
 /* Navbar Styling*/
