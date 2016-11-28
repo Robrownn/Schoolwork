@@ -12,7 +12,7 @@ p, a, th, td {
 }
 
 p {
-  text-align: center; 
+  text-align: center;
 }
 
 footer {
@@ -27,6 +27,9 @@ table, th, td {
   border-collapse: collapse;
 }
 
+canvas {
+  border: 1px solid #000000;
+}
 
 #Stream {
   width: 70%;

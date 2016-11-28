@@ -12,9 +12,9 @@
 
       <!-- Custom JS -->
       <script src="js/custom.js"></script>
-      
+
     </head>
-    <body>
+    <body onload="currentSlide(1)">
       <nav class="navbar">
         <ul class="topnav" id="myTopnav">
           <li><a href="index.html">Home</a></li>
@@ -22,22 +22,15 @@
           <li><a href="soundcloud.html">Soundcloud Projects</a></li>
           <li><a href="recommendedmusic.html">Recommended Listening</a></li>
           <li><a href="https://github.com/Robrownn">GitHub</a></li>
+          <li><a href="contact.html">Contact</a></li>
           <li class="icon">
             <a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
           </li>
         </ul>
       </nav>
 
-      <section class="info-panel circle-pic">
-        <img height=128px width=128px src="img/spotify.png">
-        <h2>Contact</h2>
-        <section class="info-panel2">
-          <p>You can email me here: <a href="mailto:robrownn@gmail.com">Email</a></p>
-        </section>
-        <section class="info-panel2">
-          <p>Or you can message me on GitHub! <a href="https://github.com/Robrownn">GitHub</a></p>
-        </section>
-
+      <section class="info-panel">
+        <canvas id="myCanvas" width="1000" height="500"></canvas>
       </section>
 
       <footer>
@@ -45,5 +38,7 @@
           © Copyright Robert Brown 2016 - All Rights Reserved
         </p>
       </footer>
+
+      <script src="js/customCanvas.js"></script>
     </body>
   </html>
