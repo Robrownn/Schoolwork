@@ -1,26 +1,17 @@
 var c = document.getElementById("myCanvas");
+var image = document.getElementById("troll");
 var ctx = c.getContext("2d");
+ctx.drawImage(image,0,0);
 
-/* Normal EQ
-ctx.beginPath();
-ctx.moveTo(0,250);
-ctx.lineTo(1000,250);
-ctx.stroke();
-*/
+var interval = 0;
+var angle = 0;
 
-/* Low Pass
-ctx.beginPath();
-ctx.moveTo(0,250);
-ctx.lineTo(800,250);
-ctx.stroke();
-ctx.bezierCurveTo(801,240, 850,250, 900,500);
-ctx.stroke();
-*/
+interval = setInterval("rotateYAxis()", 1000/60);
 
-/* High Pass */
-ctx.beginPath();
-ctx.moveTo(200,500);
-ctx.bezierCurveTo(250,125, 300,240, 350,250);
-ctx.stroke();
-ctx.lineTo(1000,250);
-ctx.stroke();
+function rotateYAxis() {
+  angle = angle + 1;
+  c.style.transform = "rotate3d(0,1,0,"+ angle + "deg)";
+  if (angle == 360) {
+    angle = 0;
+  }
+}
